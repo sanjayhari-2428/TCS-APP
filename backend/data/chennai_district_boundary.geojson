@@ -1,0 +1,487 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "chennai_district_boundary",
+      "properties": {
+        "name": "Chennai District Boundary",
+        "type": "district_boundary",
+        "state": "Tamil Nadu",
+        "district": "Chennai",
+        "area_sqkm": 426,
+        "population_2024_est": 7100000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.2985,
+              13.22
+            ],
+            [
+              80.32,
+              13.185
+            ],
+            [
+              80.315,
+              13.135
+            ],
+            [
+              80.302,
+              13.085
+            ],
+            [
+              80.288,
+              13.03
+            ],
+            [
+              80.278,
+              12.98
+            ],
+            [
+              80.26,
+              12.92
+            ],
+            [
+              80.245,
+              12.84
+            ],
+            [
+              80.21,
+              12.835
+            ],
+            [
+              80.19,
+              12.88
+            ],
+            [
+              80.17,
+              12.93
+            ],
+            [
+              80.155,
+              12.975
+            ],
+            [
+              80.16,
+              13.02
+            ],
+            [
+              80.145,
+              13.06
+            ],
+            [
+              80.15,
+              13.11
+            ],
+            [
+              80.18,
+              13.16
+            ],
+            [
+              80.22,
+              13.21
+            ],
+            [
+              80.265,
+              13.235
+            ],
+            [
+              80.2985,
+              13.22
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_anna_nagar",
+      "properties": {
+        "area_id": "AREA_ANNA_NAGAR",
+        "name": "Anna Nagar",
+        "zone_no": 8,
+        "type": "administrative_zone",
+        "centroid": [
+          13.085,
+          80.2101
+        ],
+        "baseline_demand_mld": 48.5,
+        "population": 460000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.195,
+              13.072
+            ],
+            [
+              80.225,
+              13.072
+            ],
+            [
+              80.228,
+              13.098
+            ],
+            [
+              80.198,
+              13.098
+            ],
+            [
+              80.195,
+              13.072
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_t_nagar",
+      "properties": {
+        "area_id": "AREA_T_NAGAR",
+        "name": "T. Nagar (Teynampet)",
+        "zone_no": 9,
+        "type": "administrative_zone",
+        "centroid": [
+          13.0418,
+          80.2341
+        ],
+        "baseline_demand_mld": 62.0,
+        "population": 520000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.22,
+              13.028
+            ],
+            [
+              80.25,
+              13.028
+            ],
+            [
+              80.252,
+              13.055
+            ],
+            [
+              80.222,
+              13.055
+            ],
+            [
+              80.22,
+              13.028
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_adyar",
+      "properties": {
+        "area_id": "AREA_ADYAR",
+        "name": "Adyar",
+        "zone_no": 13,
+        "type": "administrative_zone",
+        "centroid": [
+          13.0012,
+          80.2565
+        ],
+        "baseline_demand_mld": 44.0,
+        "population": 410000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.24,
+              12.985
+            ],
+            [
+              80.275,
+              12.985
+            ],
+            [
+              80.272,
+              13.015
+            ],
+            [
+              80.238,
+              13.015
+            ],
+            [
+              80.24,
+              12.985
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_velachery",
+      "properties": {
+        "area_id": "AREA_VELACHERY",
+        "name": "Velachery",
+        "zone_no": 13,
+        "type": "administrative_zone",
+        "centroid": [
+          12.9815,
+          80.218
+        ],
+        "baseline_demand_mld": 38.0,
+        "population": 370000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.205,
+              12.965
+            ],
+            [
+              80.235,
+              12.965
+            ],
+            [
+              80.235,
+              12.995
+            ],
+            [
+              80.205,
+              12.995
+            ],
+            [
+              80.205,
+              12.965
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_mylapore",
+      "properties": {
+        "area_id": "AREA_MYLAPORE",
+        "name": "Mylapore",
+        "zone_no": 9,
+        "type": "administrative_zone",
+        "centroid": [
+          13.0368,
+          80.2676
+        ],
+        "baseline_demand_mld": 41.5,
+        "population": 390000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.255,
+              13.025
+            ],
+            [
+              80.285,
+              13.025
+            ],
+            [
+              80.285,
+              13.05
+            ],
+            [
+              80.255,
+              13.05
+            ],
+            [
+              80.255,
+              13.025
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_guindy",
+      "properties": {
+        "area_id": "AREA_GUINDY",
+        "name": "Guindy / Alandur",
+        "zone_no": 12,
+        "type": "administrative_zone",
+        "centroid": [
+          13.0067,
+          80.2025
+        ],
+        "baseline_demand_mld": 35.0,
+        "population": 330000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.185,
+              12.99
+            ],
+            [
+              80.215,
+              12.99
+            ],
+            [
+              80.215,
+              13.02
+            ],
+            [
+              80.185,
+              13.02
+            ],
+            [
+              80.185,
+              12.99
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_kilpauk",
+      "properties": {
+        "area_id": "AREA_KILPAUK",
+        "name": "Kilpauk",
+        "zone_no": 8,
+        "type": "administrative_zone",
+        "centroid": [
+          13.0784,
+          80.2412
+        ],
+        "baseline_demand_mld": 32.0,
+        "population": 290000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.23,
+              13.065
+            ],
+            [
+              80.255,
+              13.065
+            ],
+            [
+              80.255,
+              13.09
+            ],
+            [
+              80.23,
+              13.09
+            ],
+            [
+              80.23,
+              13.065
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_tondiarpet",
+      "properties": {
+        "area_id": "AREA_TONDIARPET",
+        "name": "Tondiarpet",
+        "zone_no": 4,
+        "type": "administrative_zone",
+        "centroid": [
+          13.1255,
+          80.2891
+        ],
+        "baseline_demand_mld": 46.0,
+        "population": 440000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.27,
+              13.11
+            ],
+            [
+              80.305,
+              13.11
+            ],
+            [
+              80.305,
+              13.145
+            ],
+            [
+              80.27,
+              13.145
+            ],
+            [
+              80.27,
+              13.11
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zone_sholinganallur",
+      "properties": {
+        "area_id": "AREA_SHOLINGANALLUR",
+        "name": "Sholinganallur",
+        "zone_no": 15,
+        "type": "administrative_zone",
+        "centroid": [
+          12.8997,
+          80.2279
+        ],
+        "baseline_demand_mld": 52.0,
+        "population": 490000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              80.21,
+              12.88
+            ],
+            [
+              80.248,
+              12.88
+            ],
+            [
+              80.248,
+              12.92
+            ],
+            [
+              80.21,
+              12.92
+            ],
+            [
+              80.21,
+              12.88
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

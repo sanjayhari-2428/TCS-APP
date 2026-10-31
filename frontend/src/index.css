@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #070B19;
+    color: #F8FAFC;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B132B;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A3B66;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00A8E8;
+}
+
+/* Leaflet Container customization */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background: #0B132B;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #111C3A !important;
+  color: #F8FAFC !important;
+  border: 1px solid #2A3B66 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.leaflet-popup-tip {
+  background: #111C3A !important;
+  border: 1px solid #2A3B66 !important;
+}
+
+/* Glow effects */
+.glow-teal {
+  box-shadow: 0 0 20px -3px rgba(0, 245, 212, 0.25);
+}
+.glow-blue {
+  box-shadow: 0 0 20px -3px rgba(0, 168, 232, 0.25);
+}
+
