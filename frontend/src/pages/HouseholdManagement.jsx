@@ -15,6 +15,7 @@ import {
 import { api } from '../services/api';
 import StatusBadge from '../components/StatusBadge';
 import AssignLocationModal from '../components/AssignLocationModal';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 export default function HouseholdManagement() {
   const [households, setHouseholds] = useState([]);
@@ -43,7 +44,14 @@ export default function HouseholdManagement() {
   }, []);
 
   const filtered = households.filter((h) => {
-    if (searchTerm && !h.household_id.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    const zoneName = getZoneLabel(h.household_id).toLowerCase();
+    const searchLower = searchTerm.toLowerCase();
+    if (
+      searchTerm &&
+      !h.household_id.toLowerCase().includes(searchLower) &&
+      !zoneName.includes(searchLower)
+    )
+      return false;
     if (consumptionFilter !== 'all' && h.consumption_status !== consumptionFilter) return false;
     if (verificationFilter === 'verified' && !h.has_verified_coordinates) return false;
     if (verificationFilter === 'unassigned' && h.has_verified_coordinates) return false;
@@ -72,19 +80,19 @@ export default function HouseholdManagement() {
           <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
             <span className="text-xs uppercase font-mono tracking-wider text-brand-teal font-semibold">
-              District Household Registry
+              District Zonal Registry
             </span>
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">Chennai District Household Monitoring</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">Chennai District Zone Water Monitoring</h2>
           <p className="text-xs text-slate-400">
-            50 Smart-Metered Households • Zero Leakage Detection Scope • Admin GIS Registration
+            50 Smart-Metered Zones (Zone A to Zone AX) • Zero Leakage Detection Scope • Admin GIS Registration
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
           <div className="text-right text-xs">
-            <span className="text-slate-400 block">Total Cohort</span>
-            <span className="text-white font-bold font-mono text-base">{households.length} Households</span>
+            <span className="text-slate-400 block">Total Monitored Cohort</span>
+            <span className="text-white font-bold font-mono text-base">{households.length} Zones</span>
           </div>
           <button
             onClick={() => handleOpenAssign(null)}
@@ -100,11 +108,11 @@ export default function HouseholdManagement() {
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-navy-900/80 border border-navy-800 text-xs">
         <div className="flex flex-wrap items-center gap-3">
           {/* Search Box */}
-          <div className="flex items-center bg-navy-950 border border-navy-700 rounded-xl px-3 py-1.5 w-60">
+          <div className="flex items-center bg-navy-950 border border-navy-700 rounded-xl px-3 py-1.5 w-64">
             <Search className="w-3.5 h-3.5 text-brand-teal mr-2" />
             <input
               type="text"
-              placeholder="Search Household ID..."
+              placeholder="Search Zone (e.g. Zone A, Zone B)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="bg-transparent border-none text-white focus:outline-none w-full"
@@ -139,7 +147,7 @@ export default function HouseholdManagement() {
               onChange={(e) => setVerificationFilter(e.target.value)}
               className="bg-navy-950 border border-navy-700 text-white rounded-xl px-3 py-1.5 focus:border-brand-teal focus:outline-none cursor-pointer"
             >
-              <option value="all">All Households</option>
+              <option value="all">All Zones</option>
               <option value="verified">Verified Coordinates (Mapped)</option>
               <option value="unassigned">Unassigned (Demo List)</option>
             </select>
@@ -147,17 +155,17 @@ export default function HouseholdManagement() {
         </div>
 
         <span className="text-slate-400 font-mono">
-          Showing {filtered.length} of {households.length} households
+          Showing {filtered.length} of {households.length} zones
         </span>
       </div>
 
-      {/* Household Grid / Table */}
+      {/* Zone Grid / Table */}
       <div className="bg-navy-900 rounded-2xl border border-navy-700/60 shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-300">
             <thead className="bg-navy-950 text-slate-400 uppercase font-mono text-[11px] border-b border-navy-800">
               <tr>
-                <th className="py-3.5 px-4">Household ID</th>
+                <th className="py-3.5 px-4">Zone ID</th>
                 <th className="py-3.5 px-4">Occupants</th>
                 <th className="py-3.5 px-4">Daily Consumption</th>
                 <th className="py-3.5 px-4">30-Day Total</th>
@@ -173,7 +181,16 @@ export default function HouseholdManagement() {
             <tbody className="divide-y divide-navy-800/80 bg-navy-900/60">
               {filtered.map((h) => (
                 <tr key={h.household_id} className="hover:bg-navy-800/50 transition-colors">
-                  <td className="py-3.5 px-4 font-mono font-bold text-white">{h.household_id}</td>
+                  <td className="py-3.5 px-4">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-white text-sm tracking-wide">
+                        {getZoneLabel(h.household_id)}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {h.household_id}
+                      </span>
+                    </div>
+                  </td>
                   <td className="py-3.5 px-4">{h.occupants} persons</td>
                   <td className="py-3.5 px-4 font-mono font-bold text-brand-teal">{h.daily_consumption} L</td>
                   <td className="py-3.5 px-4 font-mono text-slate-300">{h.monthly_consumption?.toLocaleString()} L</td>
@@ -218,14 +235,14 @@ export default function HouseholdManagement() {
         </div>
       </div>
 
-      {/* Household Detail Modal */}
+      {/* Detail Modal */}
       {selectedHousehold && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-navy-950/80 backdrop-blur-sm p-4">
           <div className="bg-navy-900 border border-brand-teal/40 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-navy-800">
               <div>
-                <h3 className="text-base font-bold text-white font-mono">
-                  Telemetry Profile: {selectedHousehold.household_id}
+                <h3 className="text-base font-bold text-white">
+                  Telemetry Profile: {getZoneLabel(selectedHousehold.household_id)} ({selectedHousehold.household_id})
                 </h3>
                 <span className="text-xs text-slate-400">
                   {selectedHousehold.area_name} • {selectedHousehold.occupants} Occupants
@@ -262,7 +279,7 @@ export default function HouseholdManagement() {
               </div>
             </div>
 
-            {/* Reading History Snippet */}
+            {/* Reading History */}
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">Recent Meter Readings Log</h4>
               <div className="max-h-48 overflow-y-auto rounded-xl border border-navy-800">
@@ -315,4 +332,3 @@ export default function HouseholdManagement() {
     </div>
   );
 }
-

@@ -19,7 +19,7 @@ import SettingsPage from './pages/SettingsPage';
 const pageTitles = {
   dashboard: 'Smart Water Resilience Dashboard',
   map: 'Chennai Water Intelligence Map',
-  households: 'Household Water Monitoring & GIS',
+  households: 'Zone Water Monitoring & GIS',
   monitoring: 'Live Water Network Telemetry',
   forecasting: 'AI Water Demand Forecasting',
   rainfall: 'Yearly Rainfall Intelligence',

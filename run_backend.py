@@ -16,3 +16,4 @@ if __name__ == "__main__":
     print(f"  Interactive API Docs: http://127.0.0.1:{settings.BACKEND_PORT}/docs")
     print("=" * 70)
     uvicorn.run("backend.app.main:app", host="127.0.0.1", port=settings.BACKEND_PORT, reload=False)
+

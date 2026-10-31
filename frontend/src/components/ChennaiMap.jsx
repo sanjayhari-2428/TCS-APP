@@ -25,6 +25,7 @@ import {
   X
 } from 'lucide-react';
 import StatusBadge from './StatusBadge';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 // Fix default leaflet marker icon issues in React
 delete L.Icon.Default.prototype._getIconUrl;
@@ -63,9 +64,9 @@ const createDivIcon = (color, symbol) => {
 };
 
 const icons = {
-  householdNormal: createDivIcon('#10B981', 'H'),
-  householdHigh: createDivIcon('#F59E0B', 'H'),
-  householdVeryHigh: createDivIcon('#EF4444', 'H'),
+  householdNormal: createDivIcon('#10B981', 'Z'),
+  householdHigh: createDivIcon('#F59E0B', 'Z'),
+  householdVeryHigh: createDivIcon('#EF4444', 'Z'),
   reservoirNormal: createDivIcon('#00F5D4', 'R'),
   reservoirModerate: createDivIcon('#F59E0B', 'R'),
   reservoirLow: createDivIcon('#EF4444', 'R'),
@@ -115,10 +116,15 @@ export default function ChennaiMap({
   const [showLayerDrawer, setShowLayerDrawer] = useState(!isMini);
   const [selectedDetail, setSelectedDetail] = useState(null);
 
-  // Filter households
+  // Filter households/zones
   const filteredHouseholds = households.filter((h) => {
     if (!h.latitude || !h.longitude) return false; // Show only placed markers on map
-    if (searchId && !h.household_id.toLowerCase().includes(searchId.toLowerCase())) return false;
+    if (searchId) {
+      const q = searchId.toLowerCase().trim();
+      const zoneLabel = getZoneLabel(h.household_id).toLowerCase();
+      const rawId = (h.household_id || '').toLowerCase();
+      if (!zoneLabel.includes(q) && !rawId.includes(q)) return false;
+    }
     if (consumptionFilter !== 'all' && h.consumption_status !== consumptionFilter) return false;
     if (selectedAreaId !== 'all' && h.area_id !== selectedAreaId) return false;
     return true;
@@ -227,15 +233,15 @@ export default function ChennaiMap({
       {/* Map Control Toolbar (Top Right / Top Left) */}
       {!isMini && (
         <div className="absolute top-4 left-4 z-[500] flex flex-wrap items-center gap-2 max-w-[calc(100%-2rem)]">
-          {/* Search Household ID */}
+          {/* Search Zone ID */}
           <div className="flex items-center bg-navy-900/90 backdrop-blur-md border border-navy-700 rounded-xl px-3 py-1.5 shadow-lg text-xs">
             <Search className="w-3.5 h-3.5 text-brand-teal mr-2" />
             <input
               type="text"
-              placeholder="Search Household ID (e.g. HH001)..."
+              placeholder="Search Zone (e.g. Zone A, Zone B)..."
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
-              className="bg-transparent border-none text-white focus:outline-none w-44 placeholder-slate-400"
+              className="bg-transparent border-none text-white focus:outline-none w-48 placeholder-slate-400"
             />
             {searchId && (
               <button onClick={() => setSearchId('')} className="text-slate-400 hover:text-white">
@@ -279,7 +285,7 @@ export default function ChennaiMap({
               className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium shadow-lg backdrop-blur-md hover:bg-amber-500/25 transition-all"
             >
               <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
-              <span>{unassignedCount} Households Unassigned (Assign GPS)</span>
+              <span>{unassignedCount} Zones Unassigned (Assign GPS)</span>
             </button>
           )}
         </div>
@@ -298,11 +304,11 @@ export default function ChennaiMap({
           </div>
 
           <div className="space-y-2 text-xs">
-            {/* Layer 1: Households */}
+            {/* Layer 1: Zones */}
             <label className="flex items-center justify-between cursor-pointer py-1 px-1.5 rounded-lg hover:bg-navy-800 transition-colors">
               <span className="flex items-center text-slate-200">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2"></span>
-                1. Household Locations
+                1. Zone Locations (Zone A, B...)
               </span>
               <input
                 type="checkbox"
@@ -412,11 +418,11 @@ export default function ChennaiMap({
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
               <span className="text-[10px] uppercase font-mono text-brand-teal">
-                {selectedDetail.type === 'household' ? 'Household Profile' : 'Chennai Zone Risk Profile'}
+                {selectedDetail.type === 'household' ? 'Zone Profile' : 'Chennai Zone Risk Profile'}
               </span>
               <h4 className="font-bold text-white text-sm">
                 {selectedDetail.type === 'household'
-                  ? selectedDetail.data.household_id
+                  ? `${getZoneLabel(selectedDetail.data.household_id)} (${selectedDetail.data.household_id})`
                   : selectedDetail.data.name}
               </h4>
             </div>
@@ -558,7 +564,7 @@ export default function ChennaiMap({
                 <Popup>
                   <div className="p-1 space-y-1.5 text-xs text-slate-100 min-w-[200px]">
                     <div className="flex justify-between items-center border-b border-navy-700 pb-1">
-                      <strong className="text-brand-teal font-mono">{h.household_id}</strong>
+                      <strong className="text-brand-teal font-mono">{getZoneLabel(h.household_id)} <span className="text-[10px] text-slate-400">({h.household_id})</span></strong>
                       <span className="text-[10px] text-slate-400 font-mono">{h.area_name}</span>
                     </div>
                     <div className="flex justify-between">

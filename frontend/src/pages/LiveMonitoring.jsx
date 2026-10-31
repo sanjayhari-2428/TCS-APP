@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import MetricCard from '../components/MetricCard';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 export default function LiveMonitoring() {
   const [stats, setStats] = useState(null);
@@ -86,7 +87,7 @@ export default function LiveMonitoring() {
         <div className="flex items-center space-x-3">
           <label className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-brand-blue to-brand-teal text-navy-950 font-bold text-xs shadow-lg shadow-brand-teal/20 hover:opacity-95 transition-opacity cursor-pointer">
             <UploadCloud className="w-4 h-4" />
-            <span>{importing ? 'Validating CSV...' : 'Import Household CSV'}</span>
+            <span>{importing ? 'Validating CSV...' : 'Import Zone CSV'}</span>
             <input
               type="file"
               accept=".csv"
@@ -150,7 +151,7 @@ export default function LiveMonitoring() {
           title="Avg Flow Velocity"
           value={stats?.avg_distribution_flow_rate_lph || '10.2'}
           unit="LPH"
-          subtitle="Household Feeder Rate"
+          subtitle="Zone Feeder Rate"
           icon={Droplet}
           color="purple"
         />
@@ -168,7 +169,7 @@ export default function LiveMonitoring() {
       {/* Tank Level Distribution Overview */}
       <div className="bg-navy-900 rounded-2xl border border-navy-700/60 p-5 shadow-xl space-y-3">
         <h3 className="text-sm font-bold text-white flex items-center justify-between">
-          <span>Household Storage Tank Capacity Distribution</span>
+          <span>Zone Storage Tank Capacity Distribution</span>
           <span className="text-xs font-mono text-slate-400">Total 50 Cohort Tanks</span>
         </h3>
 
@@ -210,19 +211,19 @@ export default function LiveMonitoring() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="text-sm font-bold text-white">Live Meter Telemetry Stream</h3>
-            <p className="text-xs text-slate-400">Chronological sensor readings across Chennai household meters</p>
+            <p className="text-xs text-slate-400">Chronological sensor readings across Chennai zone meters</p>
           </div>
 
           {/* Quick Filters */}
           <div className="flex items-center space-x-3 text-xs">
             <div className="flex items-center space-x-1.5 bg-navy-950 border border-navy-700 rounded-xl px-2.5 py-1">
-              <span className="text-slate-400">Filter HH:</span>
+              <span className="text-slate-400">Filter Zone:</span>
               <input
                 type="text"
-                placeholder="All (e.g. HH005)"
+                placeholder="All (e.g. Zone A or HH001)"
                 value={selectedHouseholdId}
                 onChange={(e) => setSelectedHouseholdId(e.target.value)}
-                className="bg-transparent border-none text-white focus:outline-none w-24 font-mono text-xs"
+                className="bg-transparent border-none text-white focus:outline-none w-44 font-mono text-xs"
               />
             </div>
           </div>
@@ -233,7 +234,7 @@ export default function LiveMonitoring() {
             <thead className="bg-navy-950 text-slate-400 uppercase font-mono text-[11px] border-b border-navy-800">
               <tr>
                 <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Household ID</th>
+                <th className="py-3 px-4">Zone ID</th>
                 <th className="py-3 px-4">Day</th>
                 <th className="py-3 px-4">Occupants</th>
                 <th className="py-3 px-4">Daily Water (L)</th>
@@ -249,7 +250,12 @@ export default function LiveMonitoring() {
               {readings.map((r, i) => (
                 <tr key={i} className="hover:bg-navy-800/40 transition-colors">
                   <td className="py-2.5 px-4 text-slate-400">{r.date}</td>
-                  <td className="py-2.5 px-4 font-bold text-white">{r.household_id}</td>
+                  <td className="py-2.5 px-4 font-bold text-white">
+                    <div className="flex flex-col">
+                      <span className="text-white font-bold">{getZoneLabel(r.household_id)}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">{r.household_id}</span>
+                    </div>
+                  </td>
                   <td className="py-2.5 px-4 font-sans text-slate-300">{r.day_of_week}</td>
                   <td className="py-2.5 px-4">{r.occupants}</td>
                   <td className="py-2.5 px-4 font-bold text-brand-teal">{r.daily_consumption_liters} L</td>

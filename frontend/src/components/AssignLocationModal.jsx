@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, MapPin, Check, AlertCircle } from 'lucide-react';
 import { api } from '../services/api';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 const CHENNAI_AREAS = [
   { id: 'AREA_T_NAGAR', name: 'T. Nagar (Teynampet)', lat: 13.0418, lng: 80.2341 },
@@ -89,14 +90,14 @@ export default function AssignLocationModal({ household, unassignedList = [], on
             </div>
           )}
 
-          {/* Household Selector */}
+          {/* Target Zone Selector */}
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-              Target Household ID
+              Target Zone ID
             </label>
             {household ? (
               <div className="px-3 py-2 bg-navy-950 rounded-xl border border-navy-700 text-white font-mono text-sm font-bold">
-                {household.household_id} ({household.occupants} occupants • {household.daily_consumption} L/day)
+                {getZoneLabel(household.household_id)} ({household.household_id}) • {household.occupants} occupants • {household.daily_consumption} L/day
               </div>
             ) : (
               <select
@@ -106,7 +107,7 @@ export default function AssignLocationModal({ household, unassignedList = [], on
               >
                 {unassignedList.map((h) => (
                   <option key={h.household_id} value={h.household_id}>
-                    {h.household_id} ({h.consumption_status} • {h.daily_consumption} L/day)
+                    {getZoneLabel(h.household_id)} ({h.household_id}) • {h.consumption_status} • {h.daily_consumption} L/day
                   </option>
                 ))}
               </select>

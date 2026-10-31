@@ -31,6 +31,7 @@ import MetricCard from '../components/MetricCard';
 import StatusBadge from '../components/StatusBadge';
 import ChennaiMap from '../components/ChennaiMap';
 import { api } from '../services/api';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
   const [metrics, setMetrics] = useState(null);
@@ -118,9 +119,9 @@ export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
       {/* Main KPI Cards Grid (Section 11) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Total Registered Households"
+          title="Total Monitored Zones"
           value={metrics?.total_households || '50'}
-          unit="Meters"
+          unit="Zones"
           subtitle="Coverage: GCC Zones"
           icon={Users}
           color="blue"
@@ -129,7 +130,7 @@ export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
           title="Total Daily Water Consumption"
           value={metrics?.total_daily_consumption_liters?.toLocaleString() || '15,480'}
           unit="Liters/Day"
-          subtitle={`Avg: ${metrics?.avg_household_consumption_liters || 310} L / household`}
+          subtitle={`Avg: ${metrics?.avg_household_consumption_liters || 310} L / zone`}
           icon={Droplets}
           color="teal"
         />
@@ -218,11 +219,11 @@ export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
           </div>
         </div>
 
-        {/* High-Consumption Households Quick List (1 col) */}
+        {/* High-Consumption Zones Quick List (1 col) */}
         <div className="bg-navy-900 rounded-2xl border border-navy-700/60 p-5 shadow-xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-navy-800">
-              <h3 className="text-sm font-bold text-white">Top Demand Households</h3>
+              <h3 className="text-sm font-bold text-white">Top Demand Zones</h3>
               <span className="text-xs font-mono text-amber-400 px-2 py-0.5 bg-amber-500/10 rounded-full border border-amber-500/20">
                 Action Recommended
               </span>
@@ -236,7 +237,8 @@ export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
                   <div key={h.household_id} className="py-2.5 flex items-center justify-between text-xs">
                     <div>
                       <div className="flex items-center space-x-2">
-                        <span className="font-mono font-bold text-white">{h.household_id}</span>
+                        <span className="font-mono font-bold text-white">{getZoneLabel(h.household_id)}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">({h.household_id})</span>
                         <StatusBadge status={h.consumption_status} />
                       </div>
                       <span className="text-[11px] text-slate-400">{h.area_name} • {h.occupants} occupants</span>
@@ -254,7 +256,7 @@ export default function Dashboard({ onNavigateToMap, onNavigateToHouseholds }) {
             onClick={() => onNavigateToHouseholds && onNavigateToHouseholds()}
             className="w-full mt-4 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-brand-teal text-xs font-medium border border-navy-700 text-center transition-colors"
           >
-            Manage All 50 Households →
+            Manage All 50 Zones →
           </button>
         </div>
       </div>

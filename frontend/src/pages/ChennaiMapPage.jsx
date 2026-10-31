@@ -14,6 +14,7 @@ import {
   Info
 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
+import { getZoneLabel } from '../utils/zoneHelper';
 
 export default function ChennaiMapPage() {
   const [households, setHouseholds] = useState([]);
@@ -108,7 +109,7 @@ export default function ChennaiMapPage() {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <span>Unassigned Cohort</span>
+              <span>Unassigned Zones</span>
               {unassignedHouseholds.length > 0 && (
                 <span className="w-5 h-5 rounded-full bg-amber-500 text-navy-950 font-bold text-[10px] flex items-center justify-center">
                   {unassignedHouseholds.length}
@@ -150,7 +151,7 @@ export default function ChennaiMapPage() {
           />
         </div>
       ) : (
-        /* Unassigned Households Queue (Section 2.A compliance) */
+        /* Unassigned Households/Zones Queue (Section 2.A compliance) */
         <div className="flex-1 overflow-y-auto bg-navy-900 rounded-2xl border border-navy-700/60 p-6 shadow-xl space-y-4">
           <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-start space-x-3 text-xs">
             <Info className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -159,8 +160,8 @@ export default function ChennaiMapPage() {
                 Strict Spatial Integrity Compliance: No Imaginary Coordinates
               </strong>
               <p>
-                The 50-household consumption dataset lacks GPS coordinates. Per project guidelines,
-                AquaGuard AI does not synthesize fake household locations. Households without admin-assigned
+                The 50-zone consumption dataset lacks GPS coordinates. Per project guidelines,
+                AquaGuard AI does not synthesize fake zone locations. Zones without admin-assigned
                 coordinates are quarantined below. Use the "Assign Chennai Coordinates" action to pin them
                 to actual GCC zones.
               </p>
@@ -171,7 +172,7 @@ export default function ChennaiMapPage() {
             <table className="w-full text-left text-xs text-slate-300">
               <thead className="bg-navy-950 text-slate-400 uppercase font-mono text-[11px] border-b border-navy-800">
                 <tr>
-                  <th className="py-3 px-4">Household ID</th>
+                  <th className="py-3 px-4">Zone ID</th>
                   <th className="py-3 px-4">Occupants</th>
                   <th className="py-3 px-4">Daily Consumption</th>
                   <th className="py-3 px-4">7-Day Moving Avg</th>
@@ -183,7 +184,12 @@ export default function ChennaiMapPage() {
               <tbody className="divide-y divide-navy-800/80 bg-navy-900/60">
                 {unassignedHouseholds.map((h) => (
                   <tr key={h.household_id} className="hover:bg-navy-800/50 transition-colors">
-                    <td className="py-3 px-4 font-mono font-bold text-white">{h.household_id}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-white">
+                      <div className="flex flex-col">
+                        <span>{getZoneLabel(h.household_id)}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">{h.household_id}</span>
+                      </div>
+                    </td>
                     <td className="py-3 px-4">{h.occupants} persons</td>
                     <td className="py-3 px-4 font-mono font-semibold text-brand-teal">{h.daily_consumption} L</td>
                     <td className="py-3 px-4 font-mono text-slate-300">{h.seven_day_average} L</td>

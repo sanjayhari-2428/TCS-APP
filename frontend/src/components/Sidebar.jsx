@@ -21,7 +21,7 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
     { id: 'map', label: 'Chennai District Map', icon: MapPin, badge: 'GIS' },
-    { id: 'households', label: 'Household Management', icon: Users, badge: '50 HH' },
+    { id: 'households', label: 'Zone Management', icon: Users, badge: '50 Zones' },
     { id: 'monitoring', label: 'Live Water Monitoring', icon: Activity, badge: 'Live' },
     { id: 'forecasting', label: 'AI Demand Forecasting', icon: TrendingUp, badge: 'RF Model' },
     { id: 'rainfall', label: 'Rainfall Intelligence', icon: CloudRain, badge: '15 Yrs' },

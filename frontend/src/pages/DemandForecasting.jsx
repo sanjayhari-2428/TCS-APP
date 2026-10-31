@@ -25,6 +25,7 @@ import {
 } from 'recharts';
 import { api } from '../services/api';
 import MetricCard from '../components/MetricCard';
+import { parseZoneToHouseholdId } from '../utils/zoneHelper';
 
 export default function DemandForecasting() {
   const [horizon, setHorizon] = useState('7_day');
@@ -37,10 +38,11 @@ export default function DemandForecasting() {
   const loadForecast = async () => {
     setLoading(true);
     try {
+      const targetId = parseZoneToHouseholdId(selectedHousehold);
       const [fc, mm, avp] = await Promise.all([
         api.getForecastDemand({
           horizon,
-          household_id: selectedHousehold || undefined
+          household_id: targetId || undefined
         }),
         api.getForecastMetrics(),
         api.getActualVsPredicted()
@@ -114,15 +116,15 @@ export default function DemandForecasting() {
             </button>
           </div>
 
-          {/* Household Selector */}
+          {/* Zone Selector */}
           <div className="flex items-center space-x-1.5 bg-navy-950 border border-navy-700 rounded-xl px-3 py-1.5 text-xs">
-            <span className="text-slate-400">Target:</span>
+            <span className="text-slate-400">Target Zone:</span>
             <input
               type="text"
-              placeholder="District Aggregate (or HH001)"
+              placeholder="District Aggregate (e.g. Zone A)"
               value={selectedHousehold}
-              onChange={(e) => setSelectedHousehold(e.target.value.toUpperCase())}
-              className="bg-transparent border-none text-white focus:outline-none w-44 font-mono"
+              onChange={(e) => setSelectedHousehold(e.target.value)}
+              className="bg-transparent border-none text-white focus:outline-none w-48 font-mono"
             />
           </div>
         </div>

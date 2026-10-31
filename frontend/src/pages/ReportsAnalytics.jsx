@@ -50,7 +50,7 @@ export default function ReportsAnalytics() {
 
   const handleExportCSV = () => {
     if (!areaComparison.length) return;
-    const headers = ['Area ID', 'Area Name', 'Zone No', 'Registered Households', 'Avg Daily Consumption (L)', '7-Day Moving Avg (L)', 'Baseline Demand (MLD)', 'Population'];
+    const headers = ['Area ID', 'Area Name', 'Zone No', 'Registered Zones', 'Avg Daily Consumption (L)', '7-Day Moving Avg (L)', 'Baseline Demand (MLD)', 'Population'];
     const rows = areaComparison.map((a) => [
       a.area_id,
       `"${a.area_name}"`,
@@ -200,7 +200,7 @@ export default function ReportsAnalytics() {
               <tr>
                 <th className="py-3 px-4">Area Name</th>
                 <th className="py-3 px-4">Zone ID</th>
-                <th className="py-3 px-4">Sample Households</th>
+                <th className="py-3 px-4">Sample Zones</th>
                 <th className="py-3 px-4">Avg Daily (L)</th>
                 <th className="py-3 px-4">7-Day Moving Avg (L)</th>
                 <th className="py-3 px-4">Baseline Demand (MLD)</th>
@@ -212,7 +212,7 @@ export default function ReportsAnalytics() {
                 <tr key={a.area_id} className="hover:bg-navy-800/40">
                   <td className="py-3 px-4 font-bold text-white font-sans">{a.area_name}</td>
                   <td className="py-3 px-4 text-slate-400">{a.area_id}</td>
-                  <td className="py-3 px-4 text-slate-300">{a.registered_households} HH</td>
+                  <td className="py-3 px-4 text-slate-300">{a.registered_households} Zones</td>
                   <td className="py-3 px-4 font-bold text-brand-teal">{a.avg_daily_consumption_liters} L</td>
                   <td className="py-3 px-4 text-slate-300">{a.seven_day_average_liters} L</td>
                   <td className="py-3 px-4 text-amber-400">{a.baseline_demand_mld} MLD</td>
