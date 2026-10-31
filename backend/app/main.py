@@ -42,15 +42,9 @@ def on_startup():
     logger.info("Starting AquaGuard AI Backend...")
     try:
         seed_database(force_reseed=False)
-        logger.info("AquaGuard AI initial startup routine complete.")
+        logger.info("AquaGuard AI startup routine complete.")
     except Exception as e:
         logger.error(f"Startup error during seeding: {e}")
-
-# Also ensure seeded on import for immediate readiness
-try:
-    seed_database(force_reseed=False)
-except Exception:
-    pass
 
 @app.get("/")
 def root():

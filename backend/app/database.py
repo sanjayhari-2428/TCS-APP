@@ -27,16 +27,16 @@ class Database:
         # 1. Attempt connection to Live MongoDB if MongoClient is available
         if MongoClient is not None:
             try:
-                logger.info(f"Attempting connection to MongoDB at: {target_uri}")
-                client = MongoClient(target_uri, serverSelectionTimeoutMS=2000)
+                logger.info(f"Checking MongoDB at: {target_uri}...")
+                client = MongoClient(target_uri, serverSelectionTimeoutMS=500)
                 client.admin.command('ping')
                 cls.client = client
                 cls.db = client[settings.DB_NAME]
                 cls.is_live_mongo = True
-                logger.info(f"Connected successfully to live MongoDB: {settings.DB_NAME}")
+                logger.info(f"Connected to live MongoDB server: {settings.DB_NAME}")
                 return
-            except Exception as e:
-                logger.warning(f"Could not connect to live MongoDB ({e}). Falling back to embedded Mock MongoDB engine.")
+            except Exception:
+                logger.info("Local MongoDB daemon not detected at localhost:27017. Using embedded MongoDB engine.")
         
         # 2. Seamless in-memory fallback using mongomock
         if mongomock is not None:
